@@ -31,13 +31,17 @@ from odoo.http import request
 
 class BlogInherit(WebsiteBlog):
     """Override class WebsiteBlog"""
-    @http.route(['/blog',
-                 '''/blog/<model("blog.blog", "[('website_id', 'in', (False, current_website_id))]"):blog>''',
-                 '''/blog/<model("blog.blog"):blog>/page/<int:page>''',
-                 '''/blog/<model("blog.blog"):blog>/tag/<string:tag>''',
-                 '''/blog/<model("blog.blog"):blog>/tag/<string:tag>/page/<int:page>''',
-                 '''/blog/search_content''',
-                 ], type='http', auth="public", website=True, csrf=False)
+    @http.route([
+        '/blog',
+        '/blog/page/<int:page>',
+        '/blog/tag/<string:tag>',
+        '/blog/tag/<string:tag>/page/<int:page>',
+        '''/blog/<model("blog.blog", "[('website_id', 'in', (False, current_website_id))]"):blog>''',
+        '''/blog/<model("blog.blog"):blog>/page/<int:page>''',
+        '''/blog/<model("blog.blog"):blog>/tag/<string:tag>''',
+        '''/blog/<model("blog.blog"):blog>/tag/<string:tag>/page/<int:page>''',
+        '''/blog/search_content''',
+    ], type='http', auth="public", website=True, csrf=False)
     def blog(self, blog=None, tag=None, page=1, **opt):
         """function related to blog display"""
         date_begin, date_end, state = opt.get('date_begin'), opt.get('date_end'), opt.get('state')
